@@ -7,27 +7,40 @@
 //
 
 #import "FirstViewController.h"
-#import "SecondViewController.h"
+
 
 @interface FirstViewController ()
+
 @property (weak, nonatomic) IBOutlet UIStepper *stepper;
+
+- (void)stepperIncreasedWithNotification:(NSNotificationCenter *)notification;
+
 
 @end
 
 @implementation FirstViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-- (IBAction)stepperTapped:(UIStepper *)sender {
+
+
+- (IBAction)stepperTapped:(UIStepper *)sender
+{
+    NSNumber *stepperValue = [[NSNumber alloc] initWithDouble:sender.value];
     
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    NSDictionary *userInfo = @{@"stepperValue" : stepperValue};
+    
+    [center postNotificationName:@"increaseStepper" object:self userInfo:userInfo];
     
 }
 

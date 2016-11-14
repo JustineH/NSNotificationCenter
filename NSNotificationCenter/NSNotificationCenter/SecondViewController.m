@@ -16,16 +16,36 @@
 
 @implementation SecondViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stepperIncreasedWithNotification:)
+                                                 name:@"increaseStepper"
+                                               object:nil];
+    
 }
 
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 
+- (void)stepperIncreasedWithNotification:(NSNotification *)notification
+{
+    self.countLabel.text = [notification.userInfo[@"stepperValue"] description];
+    NSLog(@"%@", notification.userInfo[@"stepperValue"]);
+    
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 @end
+
